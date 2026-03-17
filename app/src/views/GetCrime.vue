@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import CrimeCard from '../components/CrimeCard.vue';
 
 const crime = ref([]);
@@ -15,8 +15,8 @@ const crime = ref([]);
 async function getCrimeData() {
   try {
     const response = await fetch('https://data.cityofnewyork.us/resource/qgea-i56i.json');
-    data = await response.json();
-    crime.value = data.results
+    const data = await response.json();
+    crime.value = data.results;
   } catch (error) {
     console.error('Error fetching crime data:', error);
   }
