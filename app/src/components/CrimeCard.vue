@@ -1,8 +1,14 @@
 <template>
   <div>
-<h1>{{ props.data.title }}</h1>
-<h2>{{ props.data.description }}</h2>
-<router-link :to="crimeData">View Details</router-link>
+<router-link :to="crimeData">
+<h1>{{ props.data.id }}</h1>
+<h2>{{ props.data.ofns_decs }}</h2>
+<h2>{{ props.data.boro_nm }}</h2>
+<h2>{{ props.data.cmplnt_fr_dt }}</h2>
+<h2>{{ props.data.susp_race }}</h2>
+<h2>{{ props.data.susp_sex }}</h2>
+<h2>{{ props.data.susp_age_group }}</h2>
+</router-link>
   </div>
 </template>
 

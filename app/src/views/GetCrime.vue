@@ -1,8 +1,6 @@
 <template>
   <div>
     <CrimeCard v-for="item in crime" :key="item.id" :data="item" />
-    <router-link to="/">Back to Crime List</router-link>
-    
   </div>
 </template>
 
