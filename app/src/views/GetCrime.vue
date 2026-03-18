@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CrimeCard v-for="item in crime" :key="item.id" :data="item" />
+    <CrimeCard v-for="item in crime" :key="item.cmplnt_num" :crime="item" />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ async function getCrimeData() {
   try {
     const response = await fetch('https://data.cityofnewyork.us/resource/qgea-i56i.json');
     const data = await response.json();
-    crime.value = data.results;
+    crime.value = data;
   } catch (error) {
     console.error('Error fetching crime data:', error);
   }

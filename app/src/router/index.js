@@ -10,7 +10,7 @@ const router = createRouter({
       component: GetCrime
     },
     {
-      path: '/crime/:id',
+      path: '/crime/:cmplnt_num',
       name: 'CrimeDetails',
       component: CrimeData
     }
