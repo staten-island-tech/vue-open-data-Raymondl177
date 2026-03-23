@@ -1,9 +1,10 @@
 <template>
   <div>
 <div>
-    <div v-if="crime">
+  <router-link :to="'/'">Go Back</router-link>
+    <div class="crime-details" v-if="crime">
       <h2>{{ crime.cmplnt_num }}</h2>
-      <p>{{ crime.ofns_decs }}</p>
+      <p>{{ crime.ofns_desc }}</p>
       <p>{{ crime.boro_nm }}</p>
       <p>{{ crime.cmplnt_fr_dt }}</p>
       <p>{{ crime.susp_race }}</p>
@@ -11,8 +12,7 @@
       <p>{{ crime.susp_age_group }}</p>
     </div>
     <div v-else>Loading...</div>
-  </div>
-<router-link :to="'/'">Go Back</router-link>
+</div>
   </div>
 </template>
 
@@ -40,5 +40,10 @@ onMounted(function () {
 </script>
 
 <style scoped>
-
+.crime-details {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 </style>

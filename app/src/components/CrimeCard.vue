@@ -22,6 +22,7 @@ const props = defineProps({
 const crimeData = computed(() => {
   return `/crime/${props.crime.cmplnt_num}`;
 });
+
 </script>
 
 <style scoped>
