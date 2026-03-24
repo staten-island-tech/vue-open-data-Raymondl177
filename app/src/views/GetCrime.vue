@@ -16,16 +16,40 @@ import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
+const crime = ref([]);
+  const blackCount = ref(0)
+  const whiteCount = ref(0)
+  const asianCount = ref(0)
+  const hispanicCount = ref(0)
+  const otherCount = ref(0)
+function updateChartData (){
+  crime.value.forEach(item => {
+    if (item.susp_race.includes('BLACK')) {
+      blackCount.value++
+    }
+    else if (item.susp_race.includes('WHITE')) {
+      whiteCount.value++
+    }
+    else if (item.susp_race.includes('ASIAN')) {
+      asianCount.value++
+    }
+    else if (item.susp_race.includes('HISPANIC')) {
+      hispanicCount.value++
+    }
+    else {
+      otherCount.value++
+    }
+  })
+}
+updateChartData();
 const chartData = ref({
   labels: [ 'Black', 'White', 'Asian', 'Hispanic', 'Other' ],
-  datasets: [ { data: [40, 20, 12, 8, 2] } ]
+  datasets: [ { data: [blackCount.value, whiteCount.value, asianCount.value, hispanicCount.value, otherCount.value] } ]
 })
 
 const chartOptions = ref({
   responsive: true
 })
-const crime = ref([]);
 
 async function getCrimeData() {
   try {
