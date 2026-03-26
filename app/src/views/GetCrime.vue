@@ -1,72 +1,61 @@
 <template>
   <div>
-    <CrimeCard v-for="item in crime" :key="item.cmplnt_num" :crime="item" />
-    <Bar
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-    />
+    <div style="display:flex; gap:12px; align-items:center;">
+      <button
+        :class="{ active: selectedChart === 'race' }"
+        @click="selectedChart = 'race'"
+      >
+        Race Chart
+      </button>
+      <button
+        :class="{ active: selectedChart === 'age' }"
+        @click="selectedChart = 'age'"
+      >
+        Age Chart
+      </button>
+
+      <label for="boro" style="margin-left:16px;">Select borough:</label>
+      <select id="boro" v-model="selectedBoro">
+        <option value="">All Boroughs</option>
+        <option v-for="b in boroughs" :key="b" :value="b">{{ b }}</option>
+      </select>
+    </div>
+
+    <div style="display:flex; gap:20px; margin-top:16px;">
+      <component
+        :is="selectedComponent"
+        v-if="selectedComponent"
+        :borough="selectedBoro"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import CrimeCard from '../components/CrimeCard.vue';
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { ref, computed } from 'vue'
+import RaceChart from '@/components/RaceChart.vue'
+import AgeChart from '@/components/AgeChart.vue'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-const crime = ref([]);
-  const blackCount = ref(0)
-  const whiteCount = ref(0)
-  const asianCount = ref(0)
-  const hispanicCount = ref(0)
-  const otherCount = ref(0)
-function updateChartData (){
-  crime.value.forEach(item => {
-    if (item.susp_race.includes('BLACK')) {
-      blackCount.value++
-    }
-    else if (item.susp_race.includes('WHITE')) {
-      whiteCount.value++
-    }
-    else if (item.susp_race.includes('ASIAN')) {
-      asianCount.value++
-    }
-    else if (item.susp_race.includes('HISPANIC')) {
-      hispanicCount.value++
-    }
-    else {
-      otherCount.value++
-    }
-  })
-}
-updateChartData();
-const chartData = ref({
-  labels: [ 'Black', 'White', 'Asian', 'Hispanic', 'Other' ],
-  datasets: [ { data: [blackCount.value, whiteCount.value, asianCount.value, hispanicCount.value, otherCount.value] } ]
-})
+const boroughs = ['MANHATTAN','BRONX','BROOKLYN','QUEENS','STATEN ISLAND']
+const selectedBoro = ref('')
+const selectedChart = ref('race')
 
-const chartOptions = ref({
-  responsive: true
-})
-
-async function getCrimeData() {
-  try {
-    const response = await fetch('https://data.cityofnewyork.us/resource/qgea-i56i.json');
-    const data = await response.json();
-    crime.value = data;
-  } catch (error) {
-    console.error('Error fetching crime data:', error);
-  }
-}
-onMounted(() => {
-  getCrimeData();
-});
-
-
+const selectedComponent = computed(() =>
+  selectedChart.value === 'age' ? AgeChart : RaceChart
+)
 </script>
 
 <style scoped>
-
+button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+button.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #0063d1;
+}
 </style>
