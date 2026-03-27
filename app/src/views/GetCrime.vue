@@ -15,7 +15,7 @@
       </button>
 
       <label for="boro" style="margin-left:16px;">Select borough:</label>
-      <select id="boro" v-model="selectedBoro">
+      <select style="padding: 6px 12px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; background-color: #007bff; color: white;" id="boro" v-model="selectedBoro">
         <option value="">All Boroughs</option>
         <option v-for="b in boroughs" :key="b" :value="b">{{ b }}</option>
       </select>
